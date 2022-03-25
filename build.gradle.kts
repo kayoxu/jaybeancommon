@@ -9,7 +9,7 @@ plugins {
 }
 
 group = "com.jaybean"
-version = "0.0.1-SNAPSHOT"
+version = "0.0.1"
 java.sourceCompatibility = JavaVersion.VERSION_17
 
 
@@ -23,6 +23,7 @@ repositories {
     maven { setUrl("https://maven.aliyun.com/repository/grails-core") }
     maven { setUrl("https://maven.aliyun.com/repository/apache-snapshots") }
     maven { url = uri("https://jitpack.io") }
+    mavenLocal()
     mavenCentral()
     maven { url = uri("https://repo.spring.io/milestone") }
     maven { url = uri("https://repo.spring.io/snapshot") }
@@ -57,7 +58,7 @@ publishing {
         create("maven_public", MavenPublication::class) {
             groupId = "com.jaybean"
             artifactId = "jaybeancommon"
-            version = "1.1"
+            version = project.version.toString()
             from(components["kotlin"])
         }
     }
