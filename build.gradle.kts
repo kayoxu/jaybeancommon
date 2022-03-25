@@ -50,23 +50,13 @@ tasks.withType<Test> {
 
 
 publishing {
-//    publications {
-//        create("maven_public", MavenPublication::class) {
-//            groupId = "com.jaybean"
-//            artifactId = "jaybeancommon"
-//            version = "1.1"
-//            artifact(tasks["sourcesJar"])
-//            from(components.getByName("java"))
-//        }
-//    }
-
     publications {
-        create<MavenPublication>("maven") {
+        create("maven_public", MavenPublication::class) {
             groupId = "com.jaybean"
             artifactId = "jaybeancommon"
             version = "1.1"
             artifact(tasks["sourcesJar"])
-            from(components["java"])
+            from(components.getByName("java"))
         }
     }
- }
+}
