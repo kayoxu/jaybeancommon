@@ -47,7 +47,10 @@ tasks.withType<KotlinCompile> {
 tasks.withType<Test> {
     useJUnitPlatform()
 }
-
+tasks.getByName<Jar>("jar") {
+    enabled = true
+    archiveClassifier.set("")
+}
 
 publishing {
     publications {
