@@ -55,8 +55,7 @@ publishing {
             groupId = "com.jaybean"
             artifactId = "jaybeancommon"
             version = "1.1"
-            artifact(tasks["sourcesJar"])
-            from(components.getByName("java"))
+            from(components["kotlin"])
         }
     }
 }
