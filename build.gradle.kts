@@ -48,15 +48,14 @@ tasks.withType<Test> {
     useJUnitPlatform()
 }
 
-//afterEvaluate {
-//    publishing {
-//        publications {
-//            release(MavenPublication) {
-//                from components.release
-//                        groupId = 'com.jaybean'
-//                artifactId = 'jaybeancommon'
-//                version = '1.0-dev02'
-//            }
-//        }
-//    }
-//}
+
+publishing {
+    publications {
+        create("maven_public", MavenPublication::class) {
+            groupId = "com.jaybean"
+            artifactId = "jaybeancommon"
+            version = "1.1"
+            from(components.getByName("java"))
+        }
+    }
+}
