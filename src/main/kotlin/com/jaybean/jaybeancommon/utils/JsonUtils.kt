@@ -1,12 +1,12 @@
 package com.jaybean.jaybeancommon.utils
 
-import com.fasterxml.jackson.databind.ObjectMapper
-import com.fasterxml.jackson.core.JsonProcessingException
-import com.fasterxml.jackson.databind.SerializationFeature
-import com.fasterxml.jackson.databind.DeserializationFeature
 import com.fasterxml.jackson.annotation.JsonInclude
 import com.fasterxml.jackson.core.JsonParser
- import java.lang.Exception
+import com.fasterxml.jackson.core.JsonProcessingException
+import com.fasterxml.jackson.databind.DeserializationFeature
+import com.fasterxml.jackson.databind.JavaType
+import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.databind.SerializationFeature
 
 
 /**
@@ -30,6 +30,17 @@ object JsonUtils {
     }
 
     /*
+    * json转实体
+    * */
+    fun <T> toBeanList(json: String?, clazz: Class<T>?): List<T>? {
+        return try {
+            mapper.readValue(json, getCollectionType(MutableList::class.java, clazz!!))
+        } catch (e: Exception) {
+            ArrayList()
+        }
+    }
+
+    /*
      * 实体转json
      * */
     fun toJson(data: Any?): String? {
@@ -43,6 +54,11 @@ object JsonUtils {
 //            log.error("[{}] toJsonString error：{{}}", data.getClass().getSimpleName(), e);
         }
         return json
+    }
+
+
+    private fun getCollectionType(collectionClass: Class<*>, vararg elementClasses: Class<*>): JavaType? {
+        return mapper.typeFactory.constructParametricType(collectionClass, *elementClasses)
     }
 
 
