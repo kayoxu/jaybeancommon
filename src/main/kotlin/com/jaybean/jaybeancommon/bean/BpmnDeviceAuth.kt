@@ -12,10 +12,11 @@ import java.util.*
 //}
 class BpmnDeviceAuth : Serializable {
     var deviceId: Long? = null
-    var times: ArrayList<BpmnDeviceAuthTime> = ArrayList()
+    var bpmns: ArrayList<BpmnDeviceAuthBpmn> = ArrayList()
 }
 
-class BpmnDeviceAuthTime : Serializable {
+class BpmnDeviceAuthBpmn : Serializable {
+    var instanceId: String? = null
     var startTime: Long? = null
     var endTime: Long? = null
 }
