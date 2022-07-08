@@ -11,7 +11,7 @@ import java.util.*
 //
 //}
 class BpmnDeviceAuth : Serializable {
-    var deviceId: Long? = null
+    var deviceNo: Long? = null
     var bpmns: ArrayList<BpmnDeviceAuthBpmn> = ArrayList()
 }
 
