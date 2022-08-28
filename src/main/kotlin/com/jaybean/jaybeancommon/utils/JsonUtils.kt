@@ -12,24 +12,29 @@ import com.fasterxml.jackson.databind.SerializationFeature
 
 object JsonUtils {
 
-    private val mapper = ObjectMapper()
+    val mapper = ObjectMapper()
 
     /*
     * json转实体
+    * 无法转嵌套类型
     * */
+    @Deprecated("请使用 inline fun <reified T> toBean(json: String?): T?")
     fun <T> toBean(json: String?, clazz: Class<T>?): T? {
         var t: T? = null
         try {
             t = mapper.readValue(json, clazz)
         } catch (e: Exception) {
-//            log.error(" parse json [{}] to class [{}] error：{{}}", json, clazz.getSimpleName(), e);
         }
         return t
     }
 
+
     /*
     * json转实体
+    * 无法转嵌套类型
+    *
     * */
+    @Deprecated("请使用 inline fun <reified T> toBean(json: String?): T?")
     fun <T> toBeanList(json: String?, clazz: Class<T>?): List<T>? {
         return try {
             mapper.readValue(json, getCollectionType(MutableList::class.java, clazz!!))
@@ -37,6 +42,17 @@ object JsonUtils {
             ArrayList()
         }
     }
+
+
+    inline fun <reified T> toBean(json: String?): T? {
+        var t: T? = null
+        try {
+            t = mapper.readValue(json, object : TypeReference<T>() {})
+        } catch (e: Exception) {
+        }
+        return t
+    }
+
 
     fun toMap(json: String): Map<String?, Any?> {
         return mapper.readValue(json, object : TypeReference<Map<String?, Any?>?>() {}) ?: HashMap()
@@ -53,7 +69,6 @@ object JsonUtils {
         try {
             json = mapper.writeValueAsString(data)
         } catch (e: JsonProcessingException) {
-//            log.error("[{}] toJsonString error：{{}}", data.getClass().getSimpleName(), e);
         }
         return json
     }
@@ -62,7 +77,6 @@ object JsonUtils {
     private fun getCollectionType(collectionClass: Class<*>, vararg elementClasses: Class<*>): JavaType? {
         return mapper.typeFactory.constructParametricType(collectionClass, *elementClasses)
     }
-
 
     init {
         // 对于空的对象转json的时候不抛出错误

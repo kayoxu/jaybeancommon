@@ -22,9 +22,9 @@ class ResultData<T> {
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 class ResultPage {
-    var total: Int? = 0
-    var page: Int? = 0
-    var size: Int? = 0
+    var total: Long? = 0
+    var page: Long? = 0
+    var size: Long? = 0
 }
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
